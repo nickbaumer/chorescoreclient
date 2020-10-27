@@ -29,6 +29,7 @@ function ChoresPage({
   saveChore,
   currentUser,
   loading,
+  deleteChore,
   ...props
 }) {
   const [chore, setChore] = useState({ ...props.chore });
@@ -76,6 +77,11 @@ function ChoresPage({
         setSaving(false);
         setErrors({ onSave: error.message });
       });
+  }
+
+  function handleDelete(chore) {
+    // insert toast for delete confirmation here
+    deleteChore(chore);
   }
 
   function handleChange(event) {
@@ -158,7 +164,11 @@ function ChoresPage({
         {stats ? (
           <ComparePage compare={users} />
         ) : (
-          <ListChores chores={chores} loading={loading} />
+          <ListChores
+            chores={chores}
+            loading={loading}
+            onDelete={handleDelete}
+          />
         )}
       </div>
     </div>
@@ -174,6 +184,7 @@ ChoresPage.propTypes = {
   saveChore: PropTypes.func.isRequired,
   currentUser: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
+  deleteChore: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -201,6 +212,7 @@ const mapDispatchToProps = {
   loadChores: choreActions.loadChores,
   loadUsers: userActions.loadUsers,
   saveChore: choreActions.saveChore,
+  deleteChore: choreActions.deleteChore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChoresPage);
