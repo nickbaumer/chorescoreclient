@@ -7,6 +7,8 @@ export default function choreReducer(state = initialState.chores, action) {
       return action.chores;
     case types.CREATE_CHORE_SUCCESS:
       return [...state, { ...action.chore }];
+    case types.DELETE_CHORE_OPTIMISTIC:
+      return state.filter((chore) => chore.id !== action.chore.id);
     default:
       return state;
   }

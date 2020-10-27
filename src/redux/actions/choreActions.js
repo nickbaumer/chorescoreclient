@@ -14,6 +14,10 @@ export function updateStats(chores) {
   return { type: types.UPDATE_USER_STATS, chores };
 }
 
+export function deleteChoreOptimistic(chore) {
+  return { type: types.DELETE_CHORE_OPTIMISTIC, chore };
+}
+
 export function loadChores() {
   return function (dispatch, getState) {
     dispatch(beginApiCall());
@@ -47,5 +51,15 @@ export function saveChore(chore) {
       .then(() => {
         dispatch(updateStats(getState().chores));
       });
+  };
+}
+
+export function deleteChore(chore) {
+  return function (dispatch, getState) {
+    //op-to-mistic
+    dispatch(deleteChoreOptimistic(chore));
+    return choreApi.deleteChore(chore.id).then(() => {
+      dispatch(updateStats(getState().chores));
+    });
   };
 }
