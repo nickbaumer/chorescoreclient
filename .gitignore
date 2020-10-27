@@ -4,3 +4,4 @@ node_modules
 debug.log
 build/
 db.json
+tools/db.json

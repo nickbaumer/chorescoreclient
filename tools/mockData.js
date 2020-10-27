@@ -44,9 +44,9 @@ const chores = [
 ];
 
 const users = [
-  { id: 1, name: "Nick Baumer" },
-  { id: 2, name: "John Smith" },
-  { id: 3, name: "Amy Anderson" },
+  { id: 1, name: "Nick Baumer", totalChores: 4 },
+  { id: 2, name: "John Smith", totalChores: 2 },
+  { id: 3, name: "Amy Anderson", totalChores: 0 },
 ];
 
 const newChore = {

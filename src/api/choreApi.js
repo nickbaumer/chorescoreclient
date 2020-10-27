@@ -7,7 +7,6 @@ export function getChores() {
 }
 
 export function saveChore(chore) {
-  console.log("Save chore: " + JSON.stringify(chore));
   return fetch(baseUrl + (chore.id || ""), {
     method: chore.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
