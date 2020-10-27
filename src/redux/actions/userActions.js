@@ -6,8 +6,12 @@ export function loadUsersSuccess(users) {
   return { type: types.LOAD_USERS_SUCCESS, users };
 }
 
+export function updateStats(chores) {
+  return { type: types.UPDATE_USER_STATS, chores };
+}
+
 export function loadUsers() {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(beginApiCall());
     return userApi
       .getUsers()
@@ -17,6 +21,9 @@ export function loadUsers() {
       .catch((error) => {
         dispatch(apiCallError(error));
         throw error; // this doesn't do anything other than highlight doing something with the error
+      })
+      .then(() => {
+        dispatch(updateStats(getState().chores));
       });
   };
 }

@@ -48,7 +48,7 @@ function ChoresPage({
         alert("Loading users failed" + error);
       });
     }
-  }, []);
+  }, []); // not convinced about this dependency array but it removes the eslint warning
 
   function choreIsValid() {
     const { name, userId } = chore;
@@ -64,17 +64,16 @@ function ChoresPage({
   function handleSave(event) {
     event.preventDefault();
     chore.userId = currentUser;
-    console.log(chore.userId);
     if (!choreIsValid()) return;
     setSaving(true);
     saveChore(chore)
       .then(() => {
         setSaving(false);
         setOpen(true);
+        setChore({ name: "", description: "" });
       })
       .catch((error) => {
         setSaving(false);
-
         setErrors({ onSave: error.message });
       });
   }
@@ -114,6 +113,10 @@ function ChoresPage({
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
 
+  function handleStatsButton() {
+    setStats(!stats);
+  }
+
   return (
     <div className="App">
       <link
@@ -131,7 +134,7 @@ function ChoresPage({
           variant="contained"
           color="secondary"
           type="submit"
-          onClick={() => setStats(!stats)}
+          onClick={handleStatsButton}
         >
           Stats
         </Button>
@@ -153,7 +156,7 @@ function ChoresPage({
       </div>
       <div align="center">
         {stats ? (
-          <ComparePage chores={chores} users={users} />
+          <ComparePage compare={users} />
         ) : (
           <ListChores chores={chores} loading={loading} />
         )}
@@ -171,7 +174,6 @@ ChoresPage.propTypes = {
   saveChore: PropTypes.func.isRequired,
   currentUser: PropTypes.number.isRequired,
   loading: PropTypes.bool.isRequired,
-  course: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {

@@ -13,6 +13,10 @@ const AddChore = ({
   saving = false,
   errors,
 }) => {
+  let shouldError = false;
+  if (errors.chore) {
+    shouldError = true;
+  }
   return (
     <form onSubmit={onSave}>
       <Grid container className={classes.root} spacing={2}>
@@ -22,11 +26,11 @@ const AddChore = ({
               <TextField
                 type="text"
                 name="name"
-                value={chore.name}
+                value={chore.name || ""}
                 onChange={onChange}
                 label="Chore"
                 variant="outlined"
-                error={errors.chore}
+                error={shouldError}
               />
             </Grid>
             <Grid key="desc" item>

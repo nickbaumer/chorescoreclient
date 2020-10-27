@@ -10,8 +10,12 @@ export function createChoreSuccess(chore) {
   return { type: types.CREATE_CHORE_SUCCESS, chore };
 }
 
+export function updateStats(chores) {
+  return { type: types.UPDATE_USER_STATS, chores };
+}
+
 export function loadChores() {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(beginApiCall());
     return choreApi
       .getChores()
@@ -21,12 +25,15 @@ export function loadChores() {
       .catch((error) => {
         dispatch(apiCallError());
         throw error;
+      })
+      .then(() => {
+        dispatch(updateStats(getState().chores));
       });
   };
 }
 
 export function saveChore(chore) {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(beginApiCall());
     return choreApi
       .saveChore(chore)
@@ -36,6 +43,9 @@ export function saveChore(chore) {
       .catch((error) => {
         dispatch(apiCallError());
         throw error;
+      })
+      .then(() => {
+        dispatch(updateStats(getState().chores));
       });
   };
 }
