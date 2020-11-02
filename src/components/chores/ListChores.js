@@ -12,18 +12,23 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
-const ListChores = ({ chores, loading, onDelete }) => {
+const ListChores = ({ chores, loading, onDelete, classes }) => {
   const [delChores, setDelChores] = useState(false);
   return loading ? (
     <CircularProgress />
   ) : (
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
+    <TableContainer
+      component={Paper}
+      position="fixed"
+      className={classes.mainPaper}
+    >
+      <Table aria-label="simple table" size="small" className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>Chore</TableCell>
             <TableCell align="right">Who</TableCell>
             <TableCell align="right">Description</TableCell>
+
             <TableCell align="right">When</TableCell>
             <TableCell align="right">
               <IconButton
@@ -31,6 +36,7 @@ const ListChores = ({ chores, loading, onDelete }) => {
                   setDelChores(!delChores);
                 }}
                 aria-label="delete"
+                size="small"
               >
                 <DeleteIcon fontSize="small" />
               </IconButton>
@@ -46,16 +52,21 @@ const ListChores = ({ chores, loading, onDelete }) => {
                 </TableCell>
                 <TableCell align="right">{chore.userName}</TableCell>
                 <TableCell align="right">{chore.description || ""}</TableCell>
+
                 <TableCell align="right">
                   {chore.date.toLocaleString()}
                 </TableCell>
-                {delChores && (
-                  <TableCell align="right">
-                    <IconButton id={chore.id} onClick={() => onDelete(chore)}>
+                <TableCell align="right">
+                  {delChores && (
+                    <IconButton
+                      id={chore.id}
+                      size="small"
+                      onClick={() => onDelete(chore)}
+                    >
                       <DeleteForeverIcon fontSize="inherit" />
                     </IconButton>
-                  </TableCell>
-                )}
+                  )}
+                </TableCell>
               </TableRow>
             );
           })}
@@ -70,6 +81,8 @@ ListChores.propTypes = {
   loading: PropTypes.bool.isRequired,
   delChores: PropTypes.bool,
   onDelete: PropTypes.func.isRequired,
+  mobileOpen: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
 };
 
 export default ListChores;

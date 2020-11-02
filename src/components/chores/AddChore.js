@@ -19,8 +19,14 @@ const AddChore = ({
   }
   return (
     <form onSubmit={onSave}>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
+      <Grid
+        container
+        justify="center"
+        className={classes.mainPaper}
+        spacing={3}
+      >
+        <Grid item className={classes.control} />
+        <Grid item>
           <Grid container justify="center" alignItems="center" spacing={3}>
             <Grid key="chore" item>
               <TextField
