@@ -9,11 +9,11 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const ComparePage = ({ compare }) => {
+const ComparePage = ({ compare, classes }) => {
   return !compare ? (
     <CircularProgress />
   ) : (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.mainPaper}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
